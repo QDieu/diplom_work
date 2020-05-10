@@ -75,6 +75,13 @@ void forcesCalc_threading(std::vector<Point>& points, std::vector<Point>& resPoi
 		end_op = (n_operations * (thread_number + 1)) + rest_operations;
 	}
 
+	/*std::cerr << "Thread_number : " << thread_number << std::endl;
+
+	std::cerr << "Start_op : " << start_op << std::endl;
+
+	std::cerr << "End_op : " << end_op << std::endl;*/
+	
+
 	for (int op = start_op; op < end_op; ++op) {
 		float fx = 0, fy = 0, fz = 0;
 		for (int j = 0; j < points.size(); j++) {
@@ -171,36 +178,44 @@ int main()
 
 	std::vector<Point> dataSecond(size);
 
-	for (int i = 0; i < THREADS_NUMBER; ++i) {
-	/*	std::thread th(forcesCalc_threading, dataFirst, dataSecond, i, dt);*/
-		threadVec.push_back(std::thread(forcesCalc_threading, std::ref(dataFirst), std::ref(dataSecond), i, std::ref(dt)));
-	}
-	//тесты
 	dataFirst[1].vy = -0.0002;
 
 	//счётчик времени
 	auto now = std::chrono::high_resolution_clock::now();
 
+
 	for (int i = 0; i < iterations; i++)
 	{
-		//if (i % 2 == 0) {
-		//	/*nextStep(dataFirst, dataSecond, dt);*/
-		//	writeFile(outfile, dataSecond);
-		//}
-		//else {
-		//	/*nextStep(dataSecond, dataFirst, dt);*/
-		//	writeFile(outfile, dataFirst);
-		//}
-		if (i > 0) {
-			std::vector<Point> tmp = dataFirst;
-			dataFirst = dataSecond;
-			dataSecond = tmp;
+		if (i % 2 == 0) {
+			/*nextStep(dataFirst, dataSecond, dt);*/
+			for (int j = 0; j < THREADS_NUMBER; ++j) {
+				threadVec.push_back(std::thread(forcesCalc_threading, std::ref(dataFirst), std::ref(dataSecond), j, std::ref(dt)));
+			}
 		}
-		for (int i = 0; i < THREADS_NUMBER; ++i) {
-			if (threadVec[i].joinable())
-				threadVec[i].join();
+		else {
+			/*nextStep(dataSecond, dataFirst, dt);*/
+			for (int j = 0; j < THREADS_NUMBER; ++j) {
+				threadVec.push_back(std::thread(forcesCalc_threading, std::ref(dataSecond), std::ref(dataFirst), j, std::ref(dt)));
+			}
 		}
-		writeFile(outfile, dataFirst);
+
+
+		for (int j = 0; j < THREADS_NUMBER; ++j) {
+			if (threadVec[j].joinable())
+				threadVec[j].join();
+		}
+
+		//if (i > 0) {
+		//	std::vector<Point> tmp = dataFirst;
+		//	dataFirst = dataSecond;
+		//	dataSecond = tmp;
+		//}
+		if (i % 2 == 0) writeFile(outfile, dataSecond);
+		else writeFile(outfile, dataFirst);
+
+		//Очистка вектора и памяти
+		threadVec.clear();
+		threadVec.shrink_to_fit();
 	}
 
 
@@ -210,7 +225,6 @@ int main()
 
 	outfile.close();
 	/*genPoints();*/
-
 
 	return 0;
 }
