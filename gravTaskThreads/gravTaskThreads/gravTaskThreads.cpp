@@ -22,42 +22,42 @@ constexpr float sqr(float x) { return x * x; }
 
 
 
-//std::vector<float> forcesCalc(std::vector<Point>& points, int i) {
-//	std::vector<float> forces = { 0,0,0 };
-//	for (int j = 0; j < points.size(); j++) {
-//		if (i == j) continue;
-//
-//		float dx = points[j].x - points[i].x;
-//		float dy = points[j].y - points[i].y;
-//		float dz = points[j].z - points[i].z;
-//
-//		float dist = sqrt(dx * dx + dy * dy + dz * dz);
-//
-//		float F = (GravConst * points[i].m * points[j].m) / sqr(dist);
-//		forces[0] += F * dx / dist;
-//		forces[1] += F * dy / dist;
-//		forces[2] += F * dz / dist;
-//	}
-//	return forces;
-//}
-//
-//void nextStep(std::vector<Point>& points, std::vector<Point>& resPoints, int& dt, int& i) {
-//	//for (int i = 0; i < points.size(); i++) {
-//	std::vector<float> forcesArr = forcesCalc (points, i);
-//		resPoints[i].x = points[i].x + points[i].vx * dt + (points[i].ax * sqr(dt)) / 2;
-//		resPoints[i].y = points[i].y + points[i].vy * dt + (points[i].ay * sqr(dt)) / 2;
-//		resPoints[i].z = points[i].z + points[i].vz * dt + (points[i].az * sqr(dt)) / 2;
-//
-//		resPoints[i].m = points[i].m;
-//
-//		resPoints[i].vx = points[i].vx + points[i].ax * dt;
-//		resPoints[i].vy = points[i].vy + points[i].ay * dt;
-//		resPoints[i].vz = points[i].vz + points[i].az * dt;
-//
-//		resPoints[i].ax = forcesArr[0] / points[i].m;
-//		resPoints[i].ay = forcesArr[1] / points[i].m;
-//		resPoints[i].az = forcesArr[2] / points[i].m;
-//}
+std::vector<float> forcesCalc(std::vector<Point>& points, int i) {
+	std::vector<float> forces = { 0,0,0 };
+	for (int j = 0; j < points.size(); j++) {
+		if (i == j) continue;
+
+		float dx = points[j].x - points[i].x;
+		float dy = points[j].y - points[i].y;
+		float dz = points[j].z - points[i].z;
+
+		float dist = sqrt(dx * dx + dy * dy + dz * dz);
+
+		float F = (GravConst * points[i].m * points[j].m) / sqr(dist);
+		forces[0] += F * dx / dist;
+		forces[1] += F * dy / dist;
+		forces[2] += F * dz / dist;
+	}
+	return forces;
+}
+
+void nextStep(std::vector<Point>& points, std::vector<Point>& resPoints, int& dt, int& i) {
+	//for (int i = 0; i < points.size(); i++) {
+	std::vector<float> forcesArr = forcesCalc (points, i);
+		resPoints[i].x = points[i].x + points[i].vx * dt + (points[i].ax * sqr(dt)) / 2;
+		resPoints[i].y = points[i].y + points[i].vy * dt + (points[i].ay * sqr(dt)) / 2;
+		resPoints[i].z = points[i].z + points[i].vz * dt + (points[i].az * sqr(dt)) / 2;
+
+		resPoints[i].m = points[i].m;
+
+		resPoints[i].vx = points[i].vx + points[i].ax * dt;
+		resPoints[i].vy = points[i].vy + points[i].ay * dt;
+		resPoints[i].vz = points[i].vz + points[i].az * dt;
+
+		resPoints[i].ax = forcesArr[0] / points[i].m;
+		resPoints[i].ay = forcesArr[1] / points[i].m;
+		resPoints[i].az = forcesArr[2] / points[i].m;
+}
 
 
 void forcesCalc_threading(std::vector<Point>& points, std::vector<Point>& resPoints, const int thread_number, int& dt) {
@@ -75,6 +75,8 @@ void forcesCalc_threading(std::vector<Point>& points, std::vector<Point>& resPoi
 		end_op = (n_operations * (thread_number + 1)) + rest_operations;
 	}
 
+
+	//Вывод данных о потоке
 	/*std::cerr << "Thread_number : " << thread_number << std::endl;
 
 	std::cerr << "Start_op : " << start_op << std::endl;
@@ -83,34 +85,7 @@ void forcesCalc_threading(std::vector<Point>& points, std::vector<Point>& resPoi
 	
 
 	for (int op = start_op; op < end_op; ++op) {
-		float fx = 0, fy = 0, fz = 0;
-		for (int j = 0; j < points.size(); j++) {
-			if (j == op) continue;
-			float dx = points[j].x - points[op].x;
-			float dy = points[j].y - points[op].y;
-			float dz = points[j].z - points[op].z;
-
-			float dist = sqrt(dx * dx + dy * dy + dz * dz);
-
-			float F = (GravConst * points[op].m * points[j].m) / sqr(dist);
-			fx += F * dx / dist;
-			fy += F * dy / dist;
-			fz += F * dz / dist;
-		}
-		int i = op;
-		resPoints[i].x = points[i].x + points[i].vx * dt + (points[i].ax * sqr(dt)) / 2;
-		resPoints[i].y = points[i].y + points[i].vy * dt + (points[i].ay * sqr(dt)) / 2;
-		resPoints[i].z = points[i].z + points[i].vz * dt + (points[i].az * sqr(dt)) / 2;
-
-		resPoints[i].m = points[i].m;
-
-		resPoints[i].vx = points[i].vx + points[i].ax * dt;
-		resPoints[i].vy = points[i].vy + points[i].ay * dt;
-		resPoints[i].vz = points[i].vz + points[i].az * dt;
-
-		resPoints[i].ax = fx / points[i].m;
-		resPoints[i].ay = fy / points[i].m;
-		resPoints[i].az = fz / points[i].m;
+		nextStep(points, resPoints, dt, op);
 	}
 }
 
@@ -205,11 +180,6 @@ int main()
 				threadVec[j].join();
 		}
 
-		//if (i > 0) {
-		//	std::vector<Point> tmp = dataFirst;
-		//	dataFirst = dataSecond;
-		//	dataSecond = tmp;
-		//}
 		if (i % 2 == 0) writeFile(outfile, dataSecond);
 		else writeFile(outfile, dataFirst);
 
