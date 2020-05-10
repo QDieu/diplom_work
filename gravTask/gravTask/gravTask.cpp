@@ -56,7 +56,7 @@ void nextStep(std::vector<Point>& points, std::vector<Point>& resPoints, int &dt
 }
 
 
-//TODO: Сделать передачу через string;
+
 void readPointsData(const std::string &name, std::vector<Point>& data, int &size) {
 	std::ifstream infile(name);
 
@@ -92,8 +92,8 @@ void writeFile(std::ofstream &outfile, std::vector<Point>& data) {
 //void genPoints() {
 //	srand(time(NULL));
 //	std::ofstream out("inputDataPoint.txt", std::ios::trunc);
-//	for (int i = 0; i < 100; i++) {
-//		out << 0.001 * (rand() % 2001 - 1000) << " " <<  0.001 * (rand() % 2001 - 1000) << " " << 0.001 * (rand() % 2001 - 1000) << " " << 0.01 * (rand() % 101) << std::endl;
+//	for (int i = 0; i < 2000; i++) {
+//		out << 0.1 * (rand() % 21 - 10) << " " <<  0.1 * (rand() % 21 - 10) << " " << 0.1 * (rand() % 21 - 10) << " " << 0.1 * (rand() % 101) << std::endl;
 //	}
 //	out.close();
 //}

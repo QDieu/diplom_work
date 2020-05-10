@@ -1,10 +1,10 @@
 ﻿  gravTask.cpp
-C:\Users\navvy\Desktop\diplom\gravTask\gravTask\gravTask.cpp(22,21): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\navvy\Desktop\diplom\gravTask\gravTask\gravTask.cpp(31,12): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\gravTask\gravTask\gravTask.cpp(40,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\navvy\Desktop\diplom\gravTask\gravTask\gravTask.cpp(42,74): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\gravTask\gravTask\gravTask.cpp(43,74): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\gravTask\gravTask\gravTask.cpp(44,74): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\gravTask\gravTask\gravTask.cpp(82,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\navvy\Desktop\diplom\gravTask\gravTask\gravTask.cpp(119,27): warning C4305: =: усечение из "double" в "float"
-  gravTask.vcxproj -> C:\Users\navvy\Desktop\diplom\gravTask\Debug\gravTask.exe
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTask\gravTask\gravTask.cpp(22,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTask\gravTask\gravTask.cpp(31,12): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTask\gravTask\gravTask.cpp(40,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTask\gravTask\gravTask.cpp(42,74): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTask\gravTask\gravTask.cpp(43,74): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTask\gravTask\gravTask.cpp(44,74): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTask\gravTask\gravTask.cpp(82,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTask\gravTask\gravTask.cpp(119,27): warning C4305: =: усечение из "double" в "float"
+  gravTask.vcxproj -> C:\Users\navvy\Desktop\diplom\diplom_work\gravTask\Debug\gravTask.exe
