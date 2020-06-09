@@ -7,6 +7,7 @@
 #include <ctime>
 
 #define GravConst 6.674e-11
+#define EPS 1e-6
 
 	struct Point {
 		float x, y, z;
@@ -24,14 +25,18 @@
 		std::vector<float> forces = { 0,0,0 };
 		for (int j = 0; j < points.size(); j++) {
 			if (i == j) continue;
-	
+
 			float dx = points[j].x - points[i].x;
 			float dy = points[j].y - points[i].y;
 			float dz = points[j].z - points[i].z;
-	
+
+
 			float dist = sqrt(dx * dx + dy * dy + dz * dz);
+
+			if (dist < EPS) dist = EPS;
 	
 			float F = (GravConst * points[i].m * points[j].m) / sqr(dist);
+
 			forces[0] += F * dx / dist;
 			forces[1] += F * dy / dist;
 			forces[2] += F * dz / dist;
@@ -118,14 +123,14 @@
 
 
 	//Генератор случайных точек
-	//void genPoints() {
-	//	srand(time(NULL));
-	//	std::ofstream out("inputDataPoint.txt", std::ios::trunc);
-	//	for (int i = 0; i < 100; i++) {
-	//		out << 0.001 * (rand() % 2001 - 1000) << " " <<  0.001 * (rand() % 2001 - 1000) << " " << 0.001 * (rand() % 2001 - 1000) << " " << 0.01 * (rand() % 101) << std::endl;
-	//	}
-	//	out.close();
-	//}
+	/*void genPoints() {
+		srand(time(NULL));
+		std::ofstream out("inputDataPoint.txt", std::ios::trunc);
+		for (int i = 0; i < 2000; i++) {
+			out << 0.001 * (rand() % 2001 - 1000) << " " <<  0.001 * (rand() % 2001 - 1000) << " " << 0.001 * (rand() % 2001 - 1000) << " " << 0.01 * (rand() % 101) + 0.01 << std::endl;
+		}
+		out.close();
+	}*/
 
 	int main()
 	{
@@ -144,7 +149,7 @@
 
 		std::vector<Point> dataSecond(size);
 
-		dataFirst[1].vy = -0.0002;
+		//dataFirst[1].vy = -0.0002;
 
 		//счётчик времени
 		auto now = std::chrono::high_resolution_clock::now();
@@ -174,13 +179,12 @@
 			if (i % 2 == 0) writeFile(outfile, dataSecond);
 			else writeFile(outfile, dataFirst);
 
-			//Очистка вектора и памяти
 		}
 
 
 		//расчёт времени
-		auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - now);
-		std::cout << "Time : " << elapsed.count() << "s.\n";
+		auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - now);
+		std::cout << "Time : " << elapsed.count() << "ms.\n";
 
 		outfile.close();
 		/*genPoints();*/

@@ -1,9 +1,9 @@
 ﻿  gravTaskThreads.cpp
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(27,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(36,11): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(47,74): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(48,74): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(49,74): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(145,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(186,27): warning C4305: =: усечение из "double" в "float"
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(29,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(38,29): warning C4305: =: усечение из "double" в "float"
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(40,11): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(51,73): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(52,73): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(53,73): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\gravTaskThreads\gravTaskThreads.cpp(119,20): warning C4018: <: несоответствие типов со знаком и без знака
   gravTaskThreads.vcxproj -> C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskThreads\Debug\gravTaskThreads.exe

@@ -21,7 +21,7 @@
 
 __host__ void cuAssert(cudaError_t err, std::string msg) {
     if (err != cudaSuccess) {
-        std::cerr << msg << std::endl;
+        std::cerr << msg << " " << err <<std::endl;
         exit(1);
     }
 }
@@ -51,7 +51,7 @@ __device__ inline float sqr(float x) { return x * x; }
 //    return forces;
 //}
 
-__global__ void calc(float* points, float* resPoints, int& dt, int& size) {
+__global__ void calc(float* points, float* resPoints, int dt, int size) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
 
     int tix = threadIdx.x;
@@ -166,9 +166,9 @@ void readData(const std::string& name, int& size, int& iterations, int& dt) {
     in >> size >> iterations >> dt;
 }
 
-void writeFile(std::ofstream& outfile, std::vector<float>& data) {
+void writeFile(std::ofstream& outfile, std::vector<float>& data, int& size) {
 
-    for (int i = 0; i < data.size(); i++) {
+    for (int i = 0; i < size; i++) {
         outfile << data[i* POINTS_SIZE] << ' ' << data[i* POINTS_SIZE +1] << ' ' << data[i * POINTS_SIZE + 2] << ' ' << data[i * POINTS_SIZE + 3] << "\t\t";
     }
     outfile << "\n";
@@ -184,7 +184,7 @@ int main()
 
     readData("Data.txt", size, iterations, dt);
 
-    std::vector<float> dataFirst, dataSecond(size * 10);
+    std::vector<float> dataFirst, dataSecond(size * POINTS_SIZE);
     dataFirst.reserve(size * POINTS_SIZE);
 
     readPointsData("inputDataPoint.txt", dataFirst, size);
@@ -218,7 +218,8 @@ int main()
 
 
         cuAssert(cudaMemcpy(dataSecond.data(), cuResArr, size * sizeof(float) * POINTS_SIZE, cudaMemcpyDeviceToHost), "cudaMemcpy DTH");
-        writeFile(outfile, dataSecond);
+
+        writeFile(outfile, dataSecond, size);
 
         //Свап массивов на GPU
         if (i != 0) {

@@ -5,19 +5,21 @@
 #include <chrono>
 #include <ctime>
 #include <thread>
+#include <cmath>
 
 #define GravConst 6.674e-11
+#define EPS 1e-6
 
 struct Point {
 	float x, y, z;
-	float vx = 0, vy = 0, vz = 0;
-	float ax = 0, ay = 0, az = 0;
+	float vx, vy, vz;
+	float ax, ay, az;
 	float m;
 };
 
 static const int THREADS_NUMBER = std::thread::hardware_concurrency();
 
-constexpr float sqr(float x) { return x * x; }
+inline float sqr(float x) { return x * x; }
 
 
 
@@ -33,6 +35,8 @@ std::vector<float> forcesCalc(std::vector<Point>& points, int i) {
 
 		float dist = sqrt(dx * dx + dy * dy + dz * dz);
 
+		if (dist < EPS) dist = EPS;
+
 		float F = (GravConst * points[i].m * points[j].m) / sqr(dist);
 		forces[0] += F * dx / dist;
 		forces[1] += F * dy / dist;
@@ -43,20 +47,20 @@ std::vector<float> forcesCalc(std::vector<Point>& points, int i) {
 
 void nextStep(std::vector<Point>& points, std::vector<Point>& resPoints, int& dt, int& i) {
 	//for (int i = 0; i < points.size(); i++) {
-	std::vector<float> forcesArr = forcesCalc (points, i);
-		resPoints[i].x = points[i].x + points[i].vx * dt + (points[i].ax * sqr(dt)) / 2;
-		resPoints[i].y = points[i].y + points[i].vy * dt + (points[i].ay * sqr(dt)) / 2;
-		resPoints[i].z = points[i].z + points[i].vz * dt + (points[i].az * sqr(dt)) / 2;
+	std::vector<float> forcesArr = forcesCalc(points, i);
+	resPoints[i].x = points[i].x + points[i].vx * dt + (points[i].ax * sqr(dt)) / 2;
+	resPoints[i].y = points[i].y + points[i].vy * dt + (points[i].ay * sqr(dt)) / 2;
+	resPoints[i].z = points[i].z + points[i].vz * dt + (points[i].az * sqr(dt)) / 2;
 
-		resPoints[i].m = points[i].m;
+	resPoints[i].m = points[i].m;
 
-		resPoints[i].vx = points[i].vx + points[i].ax * dt;
-		resPoints[i].vy = points[i].vy + points[i].ay * dt;
-		resPoints[i].vz = points[i].vz + points[i].az * dt;
+	resPoints[i].vx = points[i].vx + points[i].ax * dt;
+	resPoints[i].vy = points[i].vy + points[i].ay * dt;
+	resPoints[i].vz = points[i].vz + points[i].az * dt;
 
-		resPoints[i].ax = forcesArr[0] / points[i].m;
-		resPoints[i].ay = forcesArr[1] / points[i].m;
-		resPoints[i].az = forcesArr[2] / points[i].m;
+	resPoints[i].ax = forcesArr[0] / points[i].m;
+	resPoints[i].ay = forcesArr[1] / points[i].m;
+	resPoints[i].az = forcesArr[2] / points[i].m;
 }
 
 
@@ -82,7 +86,7 @@ void forcesCalc_threading(std::vector<Point>& points, std::vector<Point>& resPoi
 	std::cerr << "Start_op : " << start_op << std::endl;
 
 	std::cerr << "End_op : " << end_op << std::endl;*/
-	
+
 
 	for (int op = start_op; op < end_op; ++op) {
 		nextStep(points, resPoints, dt, op);
@@ -97,8 +101,8 @@ void readPointsData(const std::string& name, std::vector<Point>& data, int& size
 	Point point;
 
 	for (int i = 0; i < size; i++) {
-
 		infile >> point.x >> point.y >> point.z >> point.m;
+		point.vx = point.vy = point.vz = point.ax = point.ay = point.az = 0;
 		data.push_back(point);
 	}
 }
@@ -126,7 +130,7 @@ void writeFile(std::ofstream& outfile, std::vector<Point>& data) {
 //	srand(time(NULL));
 //	std::ofstream out("inputDataPoint.txt", std::ios::trunc);
 //	for (int i = 0; i < 100; i++) {
-//		out << 0.001 * (rand() % 2001 - 1000) << " " <<  0.001 * (rand() % 2001 - 1000) << " " << 0.001 * (rand() % 2001 - 1000) << " " << 0.01 * (rand() % 101) << std::endl;
+//		out << 0.001 * (rand() % 2001 - 1000) << " " <<  0.001 * (rand() % 2001 - 1000) << " " << 0.001 * (rand() % 2001 - 1000) << " " << 0.01 * (rand() % 101) + 0.01 << std::endl;
 //	}
 //	out.close();
 //}
@@ -140,7 +144,7 @@ int main()
 
 	std::vector<std::thread> threadVec;
 
-	
+
 
 
 	std::vector<Point> dataFirst;
@@ -153,7 +157,7 @@ int main()
 
 	std::vector<Point> dataSecond(size);
 
-	dataFirst[1].vy = -0.0002;
+	//dataFirst[1].vy = -0.0002;
 
 	//счётчик времени
 	auto now = std::chrono::high_resolution_clock::now();
@@ -185,13 +189,13 @@ int main()
 
 		//Очистка вектора и памяти
 		threadVec.clear();
-		threadVec.shrink_to_fit();
+		//threadVec.shrink_to_fit();
 	}
 
 
 	//расчёт времени
-	auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - now);
-	std::cout << "Time : " << elapsed.count() << "s.\n";
+	auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - now);
+	std::cout << "Time : " << elapsed.count() << "ms.\n";
 
 	outfile.close();
 	/*genPoints();*/

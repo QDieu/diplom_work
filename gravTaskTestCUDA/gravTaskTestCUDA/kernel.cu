@@ -128,7 +128,7 @@ int main()
 
     readPointsData("inputDataPoint.txt", host_pos, size);
 
-    host_v[1].y = -0.0002;
+    //host_v[1].y = -0.0002;
     
     //������ � ������� �� ��������
     float4* cuArr_pos = NULL;
@@ -158,6 +158,7 @@ int main()
     auto now = std::chrono::high_resolution_clock::now();
 
     for (int i = 0; i < iterations; i++) {
+        //std::cerr << "Number iterations : " << i << std::endl;
         if (i % 2 == 0) {
             nextStep << < gridDim, blockDim >> > (cuArr_pos, cuArr_v, cuArr_a, cuResArr_pos, cuResArr_v, cuResArr_a, size, dt);
             cuAssert(cudaDeviceSynchronize(), "CudaSyncronize");
@@ -189,8 +190,8 @@ int main()
         }*/
     }
 
-    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - now);
-    std::cerr << "Time : " << elapsed.count() << "s.\n";
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - now);
+    std::cerr << "Time : " << elapsed.count() << "ms.\n";
 
     cudaFree(cuResArr_a);
     cudaFree(cuResArr_v);

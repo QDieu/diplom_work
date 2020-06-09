@@ -6,6 +6,7 @@
 #include <ctime>
 
 #define GravConst 6.674e-11
+#define EPS 1e-6
 
 struct Point {
 	float x, y, z;
@@ -28,7 +29,10 @@ std::vector<float> forcesCalc(std::vector<Point>& points, int i) {
 
 			float dist = sqrt(dx * dx + dy * dy + dz * dz);
 
+			if (dist < EPS) dist = EPS;
+
 			float F = (GravConst * points[i].m * points[j].m) / sqr(dist);
+			std::cerr << "F : " << F << std::endl;
 			forces[0] += F * dx / dist;
 			forces[1] += F * dy / dist;
 			forces[2] += F * dz / dist;
@@ -89,14 +93,14 @@ void writeFile(std::ofstream &outfile, std::vector<Point>& data) {
 
 
 //Генератор случайных точек
-//void genPoints() {
-//	srand(time(NULL));
-//	std::ofstream out("inputDataPoint.txt", std::ios::trunc);
-//	for (int i = 0; i < 2000; i++) {
-//		out << 0.1 * (rand() % 21 - 10) << " " <<  0.1 * (rand() % 21 - 10) << " " << 0.1 * (rand() % 21 - 10) << " " << 0.1 * (rand() % 101) << std::endl;
-//	}
-//	out.close();
-//}
+void genPoints() {
+	srand(time(NULL));
+	std::ofstream out("inputDataPoint.txt", std::ios::trunc);
+	for (int i = 0; i < 2000; i++) {
+		out << 0.1 * (rand() % 21 - 10) << " " <<  0.1 * (rand() % 21 - 10) << " " << 0.1 * (rand() % 21 - 10) << " " << 0.1 * (rand() % 101) + 0.01 << std::endl;
+	}
+	out.close();
+}
 
 int main()
 {
@@ -135,8 +139,8 @@ int main()
 
 
 	//расчёт времени
-	auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - now);
-	std::cout << "Time : " << elapsed.count() << "s.\n";
+	auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - now);
+	std::cout << "Time : " << elapsed.count() << "ms.\n";
 
 	outfile.close();
 	/*genPoints();*/

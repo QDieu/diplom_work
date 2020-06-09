@@ -1,9 +1,9 @@
 ﻿  gravTaskOpenMP.cpp
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(27,21): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(36,12): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(47,75): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(48,75): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(49,75): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(141,21): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(177,28): warning C4305: =: усечение из "double" в "float"
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(26,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(36,30): warning C4305: =: усечение из "double" в "float"
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(38,12): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(50,75): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(51,75): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(52,75): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\gravTaskOpenMP\gravTaskOpenMP.cpp(116,21): warning C4018: <: несоответствие типов со знаком и без знака
   gravTaskOpenMP.vcxproj -> C:\Users\navvy\Desktop\diplom\diplom_work\gravTaskOpenMP\Debug\gravTaskOpenMP.exe
